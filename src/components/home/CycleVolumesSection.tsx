@@ -7,7 +7,6 @@ import { useLanguage } from '../../context/LanguageContext';
 import { toBanglaNumerals, type CycleId } from '../../data/poemsCatalog';
 import { getUiCopy } from '../../data/uiCopy';
 import { TransitionLink } from '../PageTransition';
-import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import { CyclePoemDrawer } from './CyclePoemDrawer';
 import { buildCycleVolumes } from './cycleVolumesData';
 
@@ -78,8 +77,7 @@ export function CycleVolumesSection() {
       aria-label="Three poetic volumes showcase"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-32"
     >
-      <SectionShaderBackdrop sectionKey="cycles" />
-      <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
+      <div className="mx-auto max-w-[82rem] px-6 md:px-10">
         {/* Editorial Header */}
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -111,19 +109,14 @@ export function CycleVolumesSection() {
                 : String(vol.poems.length);
             const isDrawerActive = drawerCycleId === vol.id;
 
-            const leadPoemsPreview = vol.poems
-              .slice(0, 2)
-              .map((p) => p.title)
-              .join(' · ');
-
             return (
               <article
                 key={vol.id}
                 data-testid={`cycle-card-${vol.id}`}
-                className={`group flex flex-col justify-between overflow-hidden rounded-[24px] border bg-[#19202B]/68 shadow-[0_20px_50px_rgba(10,14,22,0.28)] backdrop-blur-[14px] transition-all duration-200 hover:-translate-y-1 ${
+                className={`group flex flex-col justify-between overflow-hidden rounded-[24px] border bg-[#19202B]/72 shadow-[0_24px_64px_rgba(12,16,24,0.34)] backdrop-blur-[16px] transition-all duration-200 hover:-translate-y-1 ${
                   isDrawerActive
                     ? 'border-[#DFBC91]/70'
-                    : 'border-white/14 hover:border-[#DFBC91]/45'
+                    : 'border-white/18 hover:border-white/32'
                 }`}
               >
                 <div>
@@ -141,8 +134,6 @@ export function CycleVolumesSection() {
                       <img
                         src={artwork.src}
                         alt={artwork.alt}
-                        loading="lazy"
-                        decoding="async"
                         referrerPolicy="no-referrer"
                         onError={() =>
                           setFailedImages((prev) => ({
@@ -216,13 +207,7 @@ export function CycleVolumesSection() {
                       <span className="block">{vol.couplet[1]}”</span>
                     </blockquote>
 
-                    <p
-                      lang="bn"
-                      className="mt-4 truncate text-xs text-[#F6F4EF]/72"
-                    >
-                      {leadPoemsPreview}
-                    </p>
-                    <p className="mt-1.5 text-xs text-[#B2C2D4]/80 tabular-nums">
+                    <p className="mt-4 text-xs text-[#B2C2D4]/80 tabular-nums">
                       {vol.years}
                     </p>
                   </div>

@@ -12,7 +12,6 @@ import {
   useMagnetic,
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
-import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import { AtlasAtmosphereCanvas } from './AtlasAtmosphereCanvas';
 import {
   ATMOSPHERE_REALMS,
@@ -133,23 +132,11 @@ export function AtmosphereAtlasSection() {
       aria-label="Interactive atmosphere atlas"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-36"
     >
-      {/* Edge-Feathered Local Atmospheric Aura + Domain-Warped Silk Shader + Dynamic Canvas Mist */}
+      {/* Edge-Feathered Local Atmospheric Aura + Dynamic Canvas Mist */}
       <div
         aria-hidden="true"
         className="shader-feather-y pointer-events-none absolute inset-0 z-0"
       >
-        <SectionShaderBackdrop
-          sectionKey="atlas"
-          feather={false}
-          paletteOverride={{
-            id: activeRealm.id,
-            name: { bn: activeRealm.titleBn, en: activeRealm.titleEn },
-            colorA: '#161C26',
-            colorB: activeRealm.palette.waterColorBack,
-            colorC: activeRealm.palette.mistHex,
-            accent: activeRealm.palette.accentHex,
-          }}
-        />
         {ATMOSPHERE_REALMS.map((realm, idx) => (
           <div
             key={realm.id}
@@ -247,26 +234,28 @@ export function AtmosphereAtlasSection() {
                           : 'border-white/12 bg-[#141923]/34 hover:border-white/24 hover:bg-[#141923]/56'
                       }`}
                     >
-                      <div className="grid min-w-0 grid-cols-[1.6rem_1fr] items-baseline gap-x-2.5 gap-y-1">
-                        <span
-                          className="text-xs font-semibold tabular-nums transition-colors"
-                          style={{
-                            color: isActive
-                              ? realm.palette.accentHex
-                              : 'rgba(246, 244, 239, 0.48)',
-                          }}
-                        >
-                          {fields.indexLabel}
-                        </span>
-                        <span
-                          lang={lang}
-                          className={`font-bn-display truncate text-base font-semibold md:text-lg ${
-                            isActive ? 'text-[#F6F4EF]' : 'text-[#F6F4EF]/78'
-                          }`}
-                        >
-                          {fields.title}
-                        </span>
-                        <p className="col-start-2 text-xs text-[#F6F4EF]/64">
+                      <div className="min-w-0">
+                        <div className="flex items-baseline gap-2.5">
+                          <span
+                            className="text-xs font-semibold tabular-nums transition-colors"
+                            style={{
+                              color: isActive
+                                ? realm.palette.accentHex
+                                : 'rgba(246, 244, 239, 0.48)',
+                            }}
+                          >
+                            {fields.indexLabel}
+                          </span>
+                          <span
+                            lang={lang}
+                            className={`font-bn-display truncate text-base font-semibold md:text-lg ${
+                              isActive ? 'text-[#F6F4EF]' : 'text-[#F6F4EF]/78'
+                            }`}
+                          >
+                            {fields.title}
+                          </span>
+                        </div>
+                        <p className="mt-1 pl-6 text-xs text-[#F6F4EF]/64">
                           {fields.season}
                         </p>
                       </div>
@@ -361,22 +350,12 @@ export function AtmosphereAtlasSection() {
                           r="13"
                           fill={activeRealm.palette.accentHex}
                           fillOpacity="0.22"
-                          style={{
-                            transition: reducedMotion
-                              ? 'none'
-                              : 'cx 550ms cubic-bezier(0.22, 1, 0.36, 1), cy 550ms cubic-bezier(0.22, 1, 0.36, 1)',
-                          }}
                         />
                         <circle
                           cx={orbCx}
                           cy={orbCy}
                           r="5"
                           fill={activeRealm.palette.accentHex}
-                          style={{
-                            transition: reducedMotion
-                              ? 'none'
-                              : 'cx 550ms cubic-bezier(0.22, 1, 0.36, 1), cy 550ms cubic-bezier(0.22, 1, 0.36, 1)',
-                          }}
                         />
                       </svg>
                     </div>
@@ -425,11 +404,7 @@ export function AtmosphereAtlasSection() {
                       data-testid="atlas-read-poem-cta"
                       className="glass-light inline-flex items-center gap-2 whitespace-nowrap shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold text-[#171A21] shadow-[0_12px_28px_rgba(10,14,22,0.28)] transition-all duration-200 hover:bg-white/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBC91]"
                     >
-                      <span>
-                        {lang === 'bn'
-                          ? `${linkedPoem.title} ${copy.readPoemSuffix}`
-                          : `${copy.readPoemSuffix}: ${linkedPoem.title}`}
-                      </span>
+                      <span>{copy.cta}</span>
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </TransitionLink>
                   </div>

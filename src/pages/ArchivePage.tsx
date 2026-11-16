@@ -9,7 +9,6 @@ import {
   X,
 } from 'lucide-react';
 import { TransitionLink } from '../components/PageTransition';
-import { SectionShaderBackdrop } from '../components/shaders/SectionShaderBackdrop';
 import { useLanguage } from '../context/LanguageContext';
 import {
   POEMS_CATALOG,
@@ -229,13 +228,8 @@ export function ArchivePage() {
       ref={containerRef}
       className="relative min-h-screen overflow-x-clip pb-28 text-[#F6F4EF]"
     >
-      <SectionShaderBackdrop
-        sectionKey="archive"
-        feather={false}
-        className="fixed"
-      />
-      {/* Seamless Twilight Header over Living Shader Backdrop */}
-      <header className="relative z-10 pt-28 pb-10 md:pt-36 md:pb-12">
+      {/* Seamless Twilight Header over Global Living Atmosphere */}
+      <header className="relative pt-28 pb-10 md:pt-36 md:pb-12">
         <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="text-xs font-medium text-[#DFBC91] uppercase">

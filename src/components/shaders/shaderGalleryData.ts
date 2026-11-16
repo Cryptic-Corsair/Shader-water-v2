@@ -1,7 +1,6 @@
 import type { SiteLang } from '../../context/LanguageContext';
 
 export type ShaderEngineId =
-  | 'glsl-literary-book'
   | 'glsl-wet-ink'
   | 'glsl-raymarch'
   | 'paper-voronoi'

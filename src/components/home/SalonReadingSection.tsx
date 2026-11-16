@@ -24,7 +24,6 @@ import {
   useMagnetic,
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
-import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import {
   buildMoodPulseBars,
   clampVelocityTimeScale,
@@ -133,7 +132,7 @@ function KineticRibbonRow({
       onMouseEnter={pauseRibbon}
       onMouseLeave={resumeRibbon}
       data-testid={`verse-ribbon-${direction}`}
-      className="relative z-10 w-full overflow-hidden border-y border-white/14 py-4"
+      className="relative w-full overflow-hidden border-y border-white/14 py-4"
     >
       <div
         ref={trackRef}
@@ -265,10 +264,9 @@ export function SalonReadingSection() {
       tabIndex={0}
       className="relative flex w-full flex-col justify-between gap-14 overflow-x-clip py-20 text-[#F6F4EF] focus:outline-none md:gap-20 md:py-28"
     >
-      <SectionShaderBackdrop sectionKey="salon" />
       <KineticRibbonRow items={ribbonItems} direction="left" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[82rem] px-6 md:px-10">
+      <div className="mx-auto w-full max-w-[82rem] px-6 md:px-10">
         {/* Header */}
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
@@ -291,18 +289,6 @@ export function SalonReadingSection() {
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </button>
-            <span
-              data-testid="salon-slide-counter"
-              className="min-w-[3.5rem] text-center text-xs font-medium text-[#DFBC91] tabular-nums"
-            >
-              {(() => {
-                const cur = String(activeIndex + 1).padStart(2, '0');
-                const tot = String(total).padStart(2, '0');
-                return lang === 'bn'
-                  ? `${toBanglaNumerals(cur)} / ${toBanglaNumerals(tot)}`
-                  : `${cur} / ${tot}`;
-              })()}
-            </span>
             <button
               ref={nextBtnRef}
               type="button"

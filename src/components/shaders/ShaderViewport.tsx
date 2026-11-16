@@ -45,7 +45,7 @@ export function ShaderViewport({
   className = '',
 }: ShaderViewportProps) {
   const hostRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(() => !unmountOffscreen);
+  const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(() =>
     prefersReducedMotion()
@@ -80,7 +80,6 @@ export function ShaderViewport({
   }, []);
 
   const isCustomGlsl =
-    engine === 'glsl-literary-book' ||
     engine === 'glsl-wet-ink' ||
     engine === 'glsl-raymarch' ||
     engine === 'glsl-fbm' ||

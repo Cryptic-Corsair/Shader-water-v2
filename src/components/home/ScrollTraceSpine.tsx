@@ -10,6 +10,7 @@ import {
 import {
   SPINE_WAYPOINTS,
   getActiveWaypointIndex,
+  isWaypointReached,
 } from './scrollSpineMath';
 
 interface ScrollTraceSpineProps {
@@ -22,7 +23,7 @@ export function ScrollTraceSpine({
   const spineRef = useRef<HTMLDivElement>(null);
   const meridianRef = useRef<SVGPathElement>(null);
   const secondaryArcRef = useRef<SVGPathElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { lang } = useLanguage();
 
   useGSAP(
@@ -41,7 +42,7 @@ export function ScrollTraceSpine({
         if (secondaryArc) {
           gsap.set(secondaryArc, { drawSVG: '100%' });
         }
-        setActiveIdx(SPINE_WAYPOINTS.length - 1);
+        setScrollProgress(1);
         return;
       }
 
@@ -59,8 +60,7 @@ export function ScrollTraceSpine({
           end: 'bottom bottom',
           scrub: 0.55,
           onUpdate: (self) => {
-            const nextIdx = getActiveWaypointIndex(self.progress);
-            setActiveIdx((prev) => (prev === nextIdx ? prev : nextIdx));
+            setScrollProgress(self.progress);
           },
         },
       });
@@ -88,6 +88,8 @@ export function ScrollTraceSpine({
     },
     { scope: spineRef, dependencies: [scopeSelector, lang], revertOnUpdate: true }
   );
+
+  const activeIdx = getActiveWaypointIndex(scrollProgress);
 
   // Reference DrawSVGPlugin so tree-shaking never strips registration
   void DrawSVGPlugin;
@@ -133,8 +135,8 @@ export function ScrollTraceSpine({
 
         {/* Orbital chapter waypoints */}
         {SPINE_WAYPOINTS.map((wp, idx) => {
+          const reached = isWaypointReached(scrollProgress, wp);
           const isCurrent = idx === activeIdx;
-          const reached = idx <= activeIdx;
 
           return (
             <g
