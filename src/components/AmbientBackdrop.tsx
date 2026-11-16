@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Water } from '@paper-design/shaders-react';
 import { useLocation } from 'react-router-dom';
+import { useAtmosphere } from '../context/AtmosphereContext';
 import { ScrollTrigger, gsap, prefersReducedMotion } from '../lib/motion';
 import { useReadingSurface } from './ReadingSurfaceContext';
 import {
@@ -34,6 +35,7 @@ function GlobalWaterFallback() {
 export function AmbientBackdrop() {
   const location = useLocation();
   const { surface } = useReadingSurface();
+  const { atlasOverride } = useAtmosphere();
   const [activeStage, setActiveStage] = useState<number>(() =>
     resolveRouteDefaultStage(location.pathname)
   );
@@ -48,6 +50,7 @@ export function AmbientBackdrop() {
   );
   const [webgl] = useState(() => detectWebGLCapabilities());
 
+  const isOdyssey = location.pathname === '/odyssey';
   const isReadingRoom =
     location.pathname.startsWith('/poems/') && location.pathname !== '/poems/';
   const isDaylightPaper = isReadingRoom && surface === 'paper';
@@ -89,6 +92,7 @@ export function AmbientBackdrop() {
   }, []);
 
   useEffect(() => {
+    if (isOdyssey) return;
     const defaultStage = resolveRouteDefaultStage(location.pathname);
     setActiveStage(defaultStage);
 
@@ -137,12 +141,25 @@ export function AmbientBackdrop() {
 
   const opacities = computeStageOpacities(activeStage);
 
+  if (isOdyssey) {
+    return null;
+  }
+
+  const activeRealm = location.pathname === '/' ? atlasOverride : null;
+  const waterBack = activeRealm?.waterColorBack ?? '#1B222E';
+  const waterHighlight = activeRealm?.waterColorHighlight ?? '#E6C99E';
+
   return (
     <div
       aria-hidden="true"
       data-testid="ambient-backdrop"
       data-active-stage={activeStage}
-      data-stage-name={AMBIENT_STAGES[activeStage]?.name ?? 'Dawn Fog'}
+      data-stage-name={
+        activeRealm?.realmName ??
+        AMBIENT_STAGES[activeStage]?.name ??
+        'Dawn Fog'
+      }
+      data-atmosphere-realm={activeRealm?.realmId ?? 'default'}
       data-water-active={waterConfig.active ? 'true' : 'false'}
       className={`pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#1D2430] transition-opacity duration-500 ${
         isDaylightPaper ? 'opacity-0' : 'opacity-100'
@@ -161,8 +178,8 @@ export function AmbientBackdrop() {
               image={GLOBAL_WATER_IMAGE_URI}
               fit="cover"
               scale={waterConfig.scale}
-              colorBack="#1B222E"
-              colorHighlight="#E6C99E"
+              colorBack={waterBack}
+              colorHighlight={waterHighlight}
               highlights={waterConfig.highlights}
               layering={waterConfig.layering}
               edges={waterConfig.edges}
@@ -182,6 +199,20 @@ export function AmbientBackdrop() {
           </ShaderErrorBoundary>
         )}
       </div>
+
+      {/* Atlas Atmospheric Realm Glaze (smoothly cross-fades entire page palette while viewing or sampling realms) */}
+      <div
+        data-testid="ambient-realm-glaze"
+        className="absolute inset-0"
+        style={{
+          backgroundImage: activeRealm?.backgroundImage ?? 'none',
+          opacity: activeRealm ? 0.72 : 0,
+          transition: reducedMotion
+            ? 'none'
+            : 'opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+          willChange: 'opacity',
+        }}
+      />
 
       {/* Translucent Scroll-Stage Mood Glazes (preserve clear water caustics beneath) */}
       {AMBIENT_STAGES.map((stage, idx) => (

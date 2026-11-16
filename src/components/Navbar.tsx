@@ -94,6 +94,7 @@ export function Navbar() {
   const isHome = location.pathname === '/';
   const isArchive =
     location.pathname === '/poems' || location.pathname.startsWith('/poems/');
+  const isShaders = location.pathname === '/shaders';
   const isJourneyActive =
     isHome &&
     (location.hash === '#chapter-story' ||
@@ -167,6 +168,11 @@ export function Navbar() {
               to="/poems"
               label={copy.nav.archive}
               active={isArchive}
+            />
+            <ArchiveNavLink
+              to="/shaders"
+              label={copy.nav.shaders}
+              active={isShaders}
             />
           </nav>
 
@@ -273,6 +279,17 @@ export function Navbar() {
             }`}
           >
             {copy.nav.archive}
+          </TransitionLink>
+          <TransitionLink
+            to="/shaders"
+            onClick={() => setMobileOpen(false)}
+            className={`font-editorial-serif rounded-2xl border px-5 py-4 text-2xl font-normal transition-colors ${
+              isShaders
+                ? 'border-white/35 bg-white/15 text-[#F6F4EF]'
+                : 'border-white/14 bg-white/6 text-[#F6F4EF]/90'
+            }`}
+          >
+            {copy.nav.shaders}
           </TransitionLink>
         </nav>
 

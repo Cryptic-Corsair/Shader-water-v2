@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useSmoothScroll } from '../components/SmoothScrollProvider';
+import { AtmosphereAtlasSection } from '../components/home/AtmosphereAtlasSection';
 import { ChapterPresence } from '../components/home/ChapterPresence';
 import { ChronologyLedgerSection } from '../components/home/ChronologyLedgerSection';
-import { CraftNotebookSection } from '../components/home/CraftNotebookSection';
 import { CycleVolumesSection } from '../components/home/CycleVolumesSection';
 import { HeroCinematicSection } from '../components/home/HeroCinematicSection';
 import { PoeticTriptychSection } from '../components/home/PoeticTriptychSection';
@@ -43,11 +43,11 @@ export function HomePage() {
       {/* Chapter 4 — Three Poetic Movements Triptych */}
       <PoeticTriptychSection />
 
-      {/* Chapter 5 — Three Poetic Volumes Monograph Stage */}
+      {/* Chapter 5 — Three Poetic Volumes Side-by-Side Showcase + Drawer */}
       <CycleVolumesSection />
 
-      {/* Chapter 6 — Craft & Notebook Studio */}
-      <CraftNotebookSection />
+      {/* Chapter 6 — Interactive Atmosphere Atlas */}
+      <AtmosphereAtlasSection />
 
       {/* Chapter 7 — Nocturnal Reading Salon & Kinetic Verse Ribbons */}
       <SalonReadingSection />

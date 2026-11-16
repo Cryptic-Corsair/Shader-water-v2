@@ -121,6 +121,9 @@ export function resolveTransitionLabel(
   if (pathname === '/poems') {
     return labels.archive;
   }
+  if (pathname === '/shaders') {
+    return labels.shaders;
+  }
   if (pathname === '/about') {
     return labels.about;
   }

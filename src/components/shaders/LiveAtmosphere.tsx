@@ -44,7 +44,12 @@ export interface WebGLCapabilities {
   isSoftwareRenderer: boolean;
 }
 
+let cachedWebGLCapabilities: WebGLCapabilities | null = null;
+
 export function detectWebGLCapabilities(): WebGLCapabilities {
+  if (cachedWebGLCapabilities) {
+    return cachedWebGLCapabilities;
+  }
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return { supported: false, isSoftwareRenderer: false };
   }
@@ -54,7 +59,8 @@ export function detectWebGLCapabilities(): WebGLCapabilities {
       (canvas.getContext('webgl2') as WebGL2RenderingContext | null) ||
       (canvas.getContext('webgl') as WebGLRenderingContext | null);
     if (!gl) {
-      return { supported: false, isSoftwareRenderer: false };
+      cachedWebGLCapabilities = { supported: false, isSoftwareRenderer: false };
+      return cachedWebGLCapabilities;
     }
     const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
     const renderer = debugInfo
@@ -63,9 +69,12 @@ export function detectWebGLCapabilities(): WebGLCapabilities {
     const isSoftwareRenderer = /swiftshader|llvmpipe|software|mesa/i.test(
       renderer
     );
-    return { supported: true, isSoftwareRenderer };
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    cachedWebGLCapabilities = { supported: true, isSoftwareRenderer };
+    return cachedWebGLCapabilities;
   } catch {
-    return { supported: false, isSoftwareRenderer: false };
+    cachedWebGLCapabilities = { supported: false, isSoftwareRenderer: false };
+    return cachedWebGLCapabilities;
   }
 }
 

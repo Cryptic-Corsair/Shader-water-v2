@@ -220,6 +220,12 @@ export function Footer() {
                 {copy.archive}
               </TransitionLink>
               <TransitionLink
+                to="/shaders"
+                className="editorial-link whitespace-nowrap shrink-0 text-xs font-medium text-[#F6F4EF]/90 transition-colors hover:text-[#DFBC91]"
+              >
+                {ui.nav.shaders}
+              </TransitionLink>
+              <TransitionLink
                 to="/#chapter-story"
                 className="editorial-link whitespace-nowrap shrink-0 text-xs font-medium text-[#F6F4EF]/90 transition-colors hover:text-[#DFBC91]"
               >

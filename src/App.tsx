@@ -17,6 +17,7 @@ import { ArchivePage } from './pages/ArchivePage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { PoemDetailPage } from './pages/PoemDetailPage';
+import { ShadersPage } from './pages/ShadersPage';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/poems" element={<ArchivePage />} />
                     <Route path="/poems/:slug" element={<PoemDetailPage />} />
+                    <Route path="/shaders" element={<ShadersPage />} />
                     <Route
                       path="/about"
                       element={<Navigate to="/#chapter-story" replace />}
