@@ -16,14 +16,18 @@ import {
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
 import { useSmoothScroll } from '../SmoothScrollProvider';
-import { splitHeadlineLines } from '../hero/heroAtmosphereMath';
-import { HeroSpectacleCanvas } from '../hero/HeroSpectacleCanvas';
 import { HeroTwilightAperture } from '../hero/HeroTwilightAperture';
+import { splitHeadlineLines } from '../hero/heroAtmosphereMath';
 import {
   formatFolioLabel,
   getHeroFolios,
   wrapFolioIndex,
 } from '../hero/heroSpectacleData';
+import { CustomGlslCanvas } from '../shaders/CustomGlslCanvas';
+import {
+  SITE_BACKGROUND_SHADERS,
+  resolveHeroFolioPalette,
+} from '../shaders/siteShaderChoreography';
 
 const CONTEMPLATIVE_EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -31,7 +35,6 @@ export function HeroCinematicSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const archiveBtnRef = useRef<HTMLAnchorElement>(null);
   const meetPoetBtnRef = useRef<HTMLButtonElement>(null);
-  const pointerTargetRef = useRef({ x: 0, y: 0 });
 
   const { lang } = useLanguage();
   const { isPlaying: soundActive } = useAmbientSound();
@@ -41,6 +44,7 @@ export function HeroCinematicSection() {
   const folios = useMemo(() => getHeroFolios(), []);
   const [activeFolioIdx, setActiveFolioIdx] = useState(0);
   const [pointerNorm, setPointerNorm] = useState({ x: 0, y: 0 });
+  const [inView, setInView] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(() =>
     prefersReducedMotion()
   );
@@ -62,16 +66,27 @@ export function HeroCinematicSection() {
     return () => mq.removeEventListener('change', sync);
   }, []);
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.01, rootMargin: '200px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
-  const mistScrollOpacity = useTransform(
+  const sdfScrollOpacity = useTransform(
     scrollYProgress,
-    [0, 0.85, 1],
-    [1, 0.22, 0]
+    [0, 0.88, 1],
+    [1, 0.28, 0]
   );
-  const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -44]);
+  const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   const handlePointerMove = (event: React.MouseEvent<HTMLElement>) => {
     if (reducedMotion || isTouchDevice()) return;
@@ -79,16 +94,16 @@ export function HeroCinematicSection() {
     if (!rect.width || !rect.height) return;
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-    pointerTargetRef.current = { x, y };
     setPointerNorm({ x, y });
   };
 
   const handlePointerLeave = () => {
-    pointerTargetRef.current = { x: 0, y: 0 };
     setPointerNorm({ x: 0, y: 0 });
   };
 
   const activeFolio = folios[activeFolioIdx] ?? folios[0];
+  const heroPalette = resolveHeroFolioPalette(activeFolioIdx);
+  const heroConfig = SITE_BACKGROUND_SHADERS.hero;
   const headlineLines = splitHeadlineLines(copy.hero.headline, lang);
 
   return (
@@ -98,16 +113,17 @@ export function HeroCinematicSection() {
       data-bg-stage="0"
       data-snap-station
       data-sound-active={soundActive ? 'true' : 'false'}
+      data-hero-shader="glsl-literary-book"
       aria-label="Opening literary exhibition"
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}
       className="relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-5 pt-20 pb-6 text-[#F6F4EF] sm:px-6 md:px-12 md:pt-28 md:pb-10"
     >
-      {/* Tactile Print Grain */}
+      {/* Tactile Editorial Print Grain */}
       <div
         data-testid="hero-paper-grain"
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperFiber'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperFiber)'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'repeat',
@@ -115,24 +131,42 @@ export function HeroCinematicSection() {
         }}
       />
 
-      {/* Volumetric Dusk Sky Wash + Monsoon Rain & Ripple Canvas */}
+      {/* Full-Bleed Literature Raymarch 3D SDF: Open Poetry Book, Turning Page & Brass Astrolabe */}
       <motion.div
         aria-hidden="true"
+        data-testid="hero-literary-sdf-layer"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.85, ease: CONTEMPLATIVE_EASE }}
-        style={reducedMotion ? undefined : { opacity: mistScrollOpacity }}
+        transition={{ duration: 0.75, ease: CONTEMPLATIVE_EASE }}
+        style={reducedMotion ? undefined : { opacity: sdfScrollOpacity }}
         className="pointer-events-none absolute inset-0 z-[2]"
       >
-        <HeroSpectacleCanvas
-          soundActive={soundActive}
-          pointerTargetRef={pointerTargetRef}
-        />
+        {inView ? (
+          <CustomGlslCanvas
+            engine="glsl-literary-book"
+            palette={heroPalette}
+            speed={soundActive ? heroConfig.speed * 1.32 : heroConfig.speed}
+            intensity={soundActive ? 0.95 : heroConfig.intensity}
+            scale={heroConfig.scale}
+            paused={!inView}
+            interactive={false}
+            externalPointer={{ x: pointerNorm.x + 0.5, y: pointerNorm.y + 0.5 }}
+          />
+        ) : (
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundColor: heroPalette.colorA,
+              backgroundImage: `radial-gradient(58% 58% at 68% 48%, ${heroPalette.accent}33 0%, transparent 65%), linear-gradient(155deg, ${heroPalette.colorA} 0%, ${heroPalette.colorB} 100%)`,
+            }}
+          />
+        )}
+
+        {/* Directional Contrast Veil protecting left typography & bottom edge */}
         <div
           className="absolute inset-0"
           style={{
-            background:
-              'radial-gradient(58% 55% at 76% 42%, rgba(223, 188, 145, 0.16) 0%, rgba(178, 194, 212, 0.08) 44%, transparent 74%), radial-gradient(48% 52% at 18% 24%, rgba(178, 194, 212, 0.08) 0%, transparent 70%)',
+            background: `${heroConfig.scrim}, linear-gradient(180deg, rgba(16, 20, 28, 0.22) 0%, transparent 28%, transparent 72%, rgba(16, 20, 28, 0.62) 100%)`,
           }}
         />
       </motion.div>
@@ -265,7 +299,7 @@ export function HeroCinematicSection() {
           </div>
         </motion.div>
 
-        {/* Right Illuminated Monsoon Window Centerpiece (5 cols) */}
+        {/* Right Illuminated Open-Glass Specimen Frame Framing Live 3D Book SDF (5 cols) */}
         <div className="relative z-10 lg:col-span-5">
           <HeroTwilightAperture
             activeFolio={activeFolio}

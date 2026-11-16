@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import heroApertureImg from '../../assets/images/hero_twilight_aperture_1794822853888.jpg';
 import type { SiteLang } from '../../context/LanguageContext';
 import { getCycleLabel } from '../../data/poemsCatalog';
 import { getUiCopy } from '../../data/uiCopy';
@@ -25,7 +23,6 @@ export function HeroTwilightAperture({
   reducedMotion,
   pointerNorm,
 }: HeroTwilightApertureProps) {
-  const [imgFailed, setImgFailed] = useState(false);
   const copy = getUiCopy(lang);
   const tilt = reducedMotion
     ? computeHorizonTilt(0, 0)
@@ -41,33 +38,10 @@ export function HeroTwilightAperture({
       initial={reducedMotion ? false : { opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1.05, delay: 0.22, ease: CONTEMPLATIVE_EASE }}
-      className="relative mx-auto w-full max-w-[18.25rem] sm:max-w-[24rem] lg:ml-auto lg:mr-0 lg:max-w-[27.5rem]"
+      className="relative mx-auto w-full max-w-[19rem] sm:max-w-[24rem] lg:ml-auto lg:mr-0 lg:max-w-[27.5rem]"
       style={{ perspective: '1200px' }}
     >
-      {/* Atmospheric Amber & Mist Halo Behind Aperture */}
-      <motion.div
-        aria-hidden="true"
-        animate={
-          reducedMotion
-            ? undefined
-            : {
-                scale: soundActive ? [1, 1.06, 1] : [1, 1.025, 1],
-                opacity: soundActive ? [0.65, 0.92, 0.65] : [0.48, 0.62, 0.48],
-              }
-        }
-        transition={{
-          duration: soundActive ? 4.4 : 8.5,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className="pointer-events-none absolute -inset-10 rounded-full"
-        style={{
-          background:
-            'radial-gradient(circle at 52% 44%, rgba(223, 188, 145, 0.26) 0%, rgba(178, 194, 212, 0.12) 48%, transparent 74%)',
-        }}
-      />
-
-      {/* Orbital Celestial Astrolabe Rings Framing the Aperture */}
+      {/* Orbital Celestial Astrolabe Rings Framing the Live 3D Book SDF */}
       <svg
         aria-hidden="true"
         viewBox="0 0 460 560"
@@ -92,67 +66,42 @@ export function HeroTwilightAperture({
           y1="286"
           x2="452"
           y2="286"
-          stroke="rgba(223, 188, 145, 0.24)"
+          stroke="rgba(223, 188, 145, 0.22)"
           strokeWidth="0.8"
         />
         <circle cx="398" cy="76" r="3.5" fill="#DFBC91" fillOpacity="0.88" />
         <circle cx="68" cy="488" r="2.5" fill="#F6F4EF" fillOpacity="0.65" />
       </svg>
 
-      {/* 3D Tilted Arched Monograph Glass Frame */}
+      {/* Transparent Optical Arched Specimen Lens Revealing Live 3D Raymarched Poetry Book Behind */}
       <div
-        className="relative aspect-[3/4] w-full overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-white/28 bg-[#222936] shadow-[0_34px_95px_rgba(14,18,26,0.52)] transition-transform duration-300 ease-out will-change-transform"
+        className="relative aspect-[3/4] w-full overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-white/24 bg-transparent shadow-[0_34px_95px_rgba(14,18,26,0.34)] transition-transform duration-300 ease-out will-change-transform"
         style={{
           transform: reducedMotion
             ? undefined
             : `rotateX(${tilt.rotateXDeg}deg) rotateY(${tilt.rotateYDeg}deg)`,
         }}
       >
-        {/* Bespoke Fine-Art Monsoon Window Photograph + CSS Fallback */}
-        {imgFailed ? (
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(circle at 60% 42%, rgba(223, 188, 145, 0.38) 0%, transparent 56%), linear-gradient(170deg, #3A4454 0%, #27303E 58%, #181D26 100%)',
-            }}
-          />
-        ) : (
-          <img
-            src={heroApertureImg}
-            alt="Rain-streaked twilight window overlooking a misty river and kodom blossoms"
-            referrerPolicy="no-referrer"
-            onError={() => setImgFailed(true)}
-            className="h-full w-full object-cover object-center transition-transform duration-700 ease-out"
-            style={{
-              transform: reducedMotion
-                ? 'scale(1.13)'
-                : `scale(1.14) translate3d(${(-pointerNorm.x * 10).toFixed(1)}px, ${(-pointerNorm.y * 8).toFixed(1)}px, 0)`,
-            }}
-          />
-        )}
-
-        {/* Measured Contrast Scrim for Crisp Foreground Typography */}
+        {/* Subtle Pointer-Reactive Optical Glass Sheen */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 opacity-65 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(56% 48% at ${tilt.glintPercentX}% ${tilt.glintPercentY}%, rgba(246, 244, 239, 0.16) 0%, rgba(223, 188, 145, 0.08) 38%, transparent 72%)`,
+          }}
+        />
+
+        {/* Lower Contrast Scrim strictly beneath bottom Folio Placard so 3D book floats unobscured above */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%]"
           style={{
             background:
-              'linear-gradient(180deg, rgba(23, 26, 33, 0.22) 0%, rgba(23, 26, 33, 0.08) 38%, rgba(20, 24, 32, 0.68) 72%, rgba(17, 20, 27, 0.92) 100%)',
+              'linear-gradient(180deg, transparent 0%, rgba(16, 20, 28, 0.72) 48%, rgba(14, 18, 25, 0.94) 100%)',
           }}
         />
 
-        {/* Pointer-Reactive Specular Glass Sheen */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-75 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(56% 48% at ${tilt.glintPercentX}% ${tilt.glintPercentY}%, rgba(246, 244, 239, 0.2) 0%, rgba(223, 188, 145, 0.1) 38%, transparent 72%)`,
-          }}
-        />
-
-        {/* Sound-Reactive Harmonic Ripple inside Glass */}
+        {/* Sound-Reactive Harmonic Ripple inside Optical Arch */}
         {soundActive && !reducedMotion ? (
           <motion.div
             aria-hidden="true"
@@ -173,7 +122,7 @@ export function HeroTwilightAperture({
         <div className="pointer-events-none absolute inset-x-0 top-7 flex justify-center px-6">
           <span
             lang="bn"
-            className="text-[11px] font-medium tracking-[0.04em] text-[#F6F4EF]/78 tabular-nums"
+            className="text-[11px] font-medium tracking-[0.04em] text-[#F6F4EF]/84 tabular-nums drop-shadow-sm"
           >
             {activeFolio.coordinates}
           </span>
@@ -206,7 +155,7 @@ export function HeroTwilightAperture({
                 {activeFolio.titleBn}
               </h2>
 
-              <p className="mt-1.5 text-xs leading-[1.65] text-[#F6F4EF]/78">
+              <p className="mt-1.5 text-xs leading-[1.65] text-[#F6F4EF]/82">
                 {noteDisplay}
               </p>
 

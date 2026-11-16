@@ -17,6 +17,7 @@ import {
   useMagnetic,
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
+import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import { filterTimelineMilestonesByCycle } from './cycleVolumesData';
 import { buildMeridianTimeline } from './timelinePortalData';
 
@@ -128,7 +129,8 @@ export function ChronologyLedgerSection() {
       aria-label="Poem chronology and exhibition epilogue"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-36"
     >
-      <div className="mx-auto max-w-[82rem] px-6 md:px-10">
+      <SectionShaderBackdrop sectionKey="chronology" />
+      <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
         {/* Header & Description */}
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>

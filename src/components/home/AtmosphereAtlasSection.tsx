@@ -12,6 +12,7 @@ import {
   useMagnetic,
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
+import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import { AtlasAtmosphereCanvas } from './AtlasAtmosphereCanvas';
 import {
   ATMOSPHERE_REALMS,
@@ -132,11 +133,23 @@ export function AtmosphereAtlasSection() {
       aria-label="Interactive atmosphere atlas"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-36"
     >
-      {/* Edge-Feathered Local Atmospheric Aura + Dynamic Canvas Mist */}
+      {/* Edge-Feathered Local Atmospheric Aura + Domain-Warped Silk Shader + Dynamic Canvas Mist */}
       <div
         aria-hidden="true"
         className="shader-feather-y pointer-events-none absolute inset-0 z-0"
       >
+        <SectionShaderBackdrop
+          sectionKey="atlas"
+          feather={false}
+          paletteOverride={{
+            id: activeRealm.id,
+            name: { bn: activeRealm.titleBn, en: activeRealm.titleEn },
+            colorA: '#161C26',
+            colorB: activeRealm.palette.waterColorBack,
+            colorC: activeRealm.palette.mistHex,
+            accent: activeRealm.palette.accentHex,
+          }}
+        />
         {ATMOSPHERE_REALMS.map((realm, idx) => (
           <div
             key={realm.id}

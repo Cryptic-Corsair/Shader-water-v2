@@ -7,6 +7,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { toBanglaNumerals, type CycleId } from '../../data/poemsCatalog';
 import { getUiCopy } from '../../data/uiCopy';
 import { TransitionLink } from '../PageTransition';
+import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 import { CyclePoemDrawer } from './CyclePoemDrawer';
 import { buildCycleVolumes } from './cycleVolumesData';
 
@@ -77,7 +78,8 @@ export function CycleVolumesSection() {
       aria-label="Three poetic volumes showcase"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-32"
     >
-      <div className="mx-auto max-w-[82rem] px-6 md:px-10">
+      <SectionShaderBackdrop sectionKey="cycles" />
+      <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
         {/* Editorial Header */}
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>

@@ -72,6 +72,8 @@ export const UI_COPY = {
     carousel: {
       eyebrow: 'বিষয়ভিত্তিক সংকলন',
       heading: 'তিনটি কাব্যচক্র',
+      subheading:
+        'গোধূলি ও স্বপ্নীল আকাশ, মুখোশ ও বাস্তবতা এবং অনুভব ও ভোরের শিশির—পাশাপাশি তিনটি কাব্যচক্র ও তাৎক্ষণিক পাঠ-দরাজ।',
       prevAria: 'পূর্ববর্তী সংকলন',
       nextAria: 'পরবর্তী সংকলন',
       openCycle: 'সংকলন খুলুন',
@@ -79,12 +81,21 @@ export const UI_COPY = {
       hint: 'টেনে ধরুন, অ্যারো কী ব্যবহার করুন অথবা সংকলন নির্বাচন করে কবিতাগারে প্রবেশ করুন',
       contentsLabel: 'এই পর্বের কবিতাগুলো',
       volumeLabel: 'কাব্যচক্র',
+      closeDrawer: 'দরাজ বন্ধ করুন',
+      drawerSubtitle: 'এই কাব্যচক্রের সকল কবিতা',
+      openReadingRoom: 'পাঠকক্ষে পড়ুন',
+      exploreArchiveCycle: 'সকল কবিতাগারে দেখুন',
     },
     story: {
-      eyebrow: 'সৃষ্টি ও অনুভব',
-      heading: 'কবিতার খাতা ও ভাবনার উৎস',
+      eyebrow: 'আবহ মানচিত্র · অনুভবের দিগন্ত',
+      heading: 'আবহ ও রঙের পরিভ্রমণ',
+      subheading:
+        'স্ক্রল করার সাথে সাথে আকাশ ও জলের রঙ বদলে যায়—অথবা নিচের যেকোনো অনুভবের পরিমণ্ডল বেছে নিয়ে সরাসরি কবিতার আবহে প্রবেশ করুন।',
       cta: 'সকল সংগৃহীত কবিতা পড়ুন',
       progressLabel: 'পাঠের গভীরতা',
+      resumeScroll: 'স্ক্রল-অনুসরণ চালু করুন',
+      followScroll: 'স্ক্রল অনুযায়ী পরিবর্তনশীল',
+      realmsLabel: 'চারটি অনুভবের পরিমণ্ডল',
     },
     verseStage: {
       eyebrow: 'নির্বাচিত পাঠ',
@@ -282,6 +293,8 @@ export const UI_COPY = {
     carousel: {
       eyebrow: 'Thematic Cycles',
       heading: 'Three Poetic Volumes',
+      subheading:
+        'Three side-by-side verse cycles paired with an instant reading drawer—from twilight skies to masks and morning dew.',
       prevAria: 'Previous cycle',
       nextAria: 'Next cycle',
       openCycle: 'Open Cycle',
@@ -289,12 +302,21 @@ export const UI_COPY = {
       hint: 'Drag, use arrow keys, or select a cycle to explore the poems',
       contentsLabel: 'Poems in this Volume',
       volumeLabel: 'Volume',
+      closeDrawer: 'Close drawer',
+      drawerSubtitle: 'Indexed works in this cycle',
+      openReadingRoom: 'Open Reading Room',
+      exploreArchiveCycle: 'Explore Archive Cycle',
     },
     story: {
-      eyebrow: 'Craft & Voice',
-      heading: 'Notes on Voice & Notebook',
+      eyebrow: 'Atmosphere Atlas',
+      heading: 'Realms of Twilight & Mood',
+      subheading:
+        'The sky and water palette shifts continuously as you scroll—or pick any realm below to inhabit its atmospheric light.',
       cta: 'Read the Collected Poems',
       progressLabel: 'Scroll Resonance',
+      resumeScroll: 'Resume scroll sync',
+      followScroll: 'Synced to scroll',
+      realmsLabel: 'Four Atmospheric Realms',
     },
     verseStage: {
       eyebrow: 'Featured Reading Stage',

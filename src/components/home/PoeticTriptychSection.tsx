@@ -10,6 +10,7 @@ import {
 } from '../../lib/motion';
 import { TransitionLink } from '../PageTransition';
 import { useSmoothScroll } from '../SmoothScrollProvider';
+import { SectionShaderBackdrop } from '../shaders/SectionShaderBackdrop';
 
 const WAVE_PATHS = [
   'M 0 68 C 72 28, 150 96, 224 54 C 290 18, 344 74, 400 44',
@@ -80,7 +81,8 @@ export function PoeticTriptychSection() {
       aria-label="Poetic triptych and cadence"
       className="relative w-full overflow-x-clip py-24 text-[#F6F4EF] md:py-36"
     >
-      <div className="mx-auto max-w-[82rem] px-6 md:px-10">
+      <SectionShaderBackdrop sectionKey="triptych" />
+      <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
         <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16">
           {/* Sticky Left Cadence Instrument (5 cols) */}
           <div className="lg:col-span-5 lg:sticky lg:top-[18vh]">

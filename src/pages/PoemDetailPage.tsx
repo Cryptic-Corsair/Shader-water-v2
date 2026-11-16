@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { TransitionLink } from '../components/PageTransition';
 import { useReadingSurface } from '../components/ReadingSurfaceContext';
+import { SectionShaderBackdrop } from '../components/shaders/SectionShaderBackdrop';
 import { useLanguage } from '../context/LanguageContext';
 import {
   formatReadingTime,
@@ -369,15 +370,30 @@ export function PoemDetailPage() {
           }`}
         />
 
-        {/* Pure-CSS Poem Mood Pigment Veil layered over Global AmbientBackdrop (0 WebGL overhead) */}
+        {/* Raymarched 3D Torus Orbit + Mood Pigment Veil in Twilight Mode (omitted in Daylight Paper) */}
         {!isDaylight ? (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500"
-            style={{
-              background: `radial-gradient(75% 65% at 22% 18%, ${poem.moodColors[2]}22 0%, transparent 62%), radial-gradient(70% 68% at 84% 78%, ${poem.moodColors[0]}48 0%, transparent 66%)`,
-            }}
-          />
+          <>
+            <SectionShaderBackdrop
+              sectionKey="reading-room"
+              feather={false}
+              className="fixed"
+              paletteOverride={{
+                id: `poem-${poem.slug}`,
+                name: { bn: poem.title, en: poem.title },
+                colorA: poem.moodColors[0] ?? '#171C25',
+                colorB: poem.moodColors[1] ?? '#2E3849',
+                colorC: poem.moodColors[2] ?? '#7A726C',
+                accent: '#DFBC91',
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500"
+              style={{
+                background: `radial-gradient(75% 65% at 22% 18%, ${poem.moodColors[2]}22 0%, transparent 62%), radial-gradient(70% 68% at 84% 78%, ${poem.moodColors[0]}48 0%, transparent 66%)`,
+              }}
+            />
+          </>
         ) : null}
 
         <div className="relative z-10 mx-auto max-w-[82rem] px-6 md:px-10">
