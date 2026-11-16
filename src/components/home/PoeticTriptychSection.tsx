@@ -71,6 +71,7 @@ export function PoeticTriptychSection() {
   );
 
   const activePhrase = copy.phrases[activeMovement] ?? copy.phrases[0];
+  const activeSlug = copy.movementSlugs[activeMovement] ?? 'mukhosher-antarale';
 
   return (
     <section
@@ -122,7 +123,7 @@ export function PoeticTriptychSection() {
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`h-1.5 w-6 rounded-full transition-all duration-300 ${
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
                         isActive ? 'bg-[#DFBC91] w-8' : 'bg-white/22 w-3'
                       }`}
                     />
@@ -131,8 +132,8 @@ export function PoeticTriptychSection() {
               })}
             </div>
 
-            {/* Bespoke SVG Horizon Waveform Visual */}
-            <div className="mt-8 rounded-2xl border border-white/14 bg-[#1E2531]/42 p-5 backdrop-blur-[12px]">
+            {/* Open Hairline Horizon Waveform Cadence Gauge */}
+            <div className="mt-8 border-t border-white/14 pt-6">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 400 100"
@@ -144,14 +145,14 @@ export function PoeticTriptychSection() {
                   y1="52"
                   x2="400"
                   y2="52"
-                  stroke="rgba(246, 244, 239, 0.14)"
+                  stroke="rgba(246, 244, 239, 0.16)"
                   strokeWidth="0.75"
                   strokeDasharray="3 6"
                 />
                 <path
                   d={WAVE_PATHS[activeMovement] ?? WAVE_PATHS[0]}
                   stroke="#DFBC91"
-                  strokeWidth="1.4"
+                  strokeWidth="1.5"
                   strokeLinecap="round"
                   style={{ transition: 'd 420ms cubic-bezier(0.16, 1, 0.3, 1)' }}
                 />
@@ -160,14 +161,25 @@ export function PoeticTriptychSection() {
                   cy={52}
                   r="4"
                   fill="#DFBC91"
+                  style={{ transition: 'cx 420ms cubic-bezier(0.16, 1, 0.3, 1)' }}
                 />
               </svg>
-              <p className="mt-2 text-xs text-[#B2C2D4] tabular-nums">
-                {copy.whispers[activeMovement] ?? copy.whispers[0]}
-              </p>
-              <p className="mt-1 text-xs leading-[1.65] text-[#F6F4EF]/76">
-                {activePhrase.note}
-              </p>
+              <div className="mt-3 flex items-center justify-between gap-4">
+                <span className="text-xs font-medium text-[#B2C2D4] tabular-nums">
+                  {activePhrase.label}
+                </span>
+                <TransitionLink
+                  to={`/poems/${activeSlug}`}
+                  data-testid="triptych-gauge-read-link"
+                  className="group inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-xs font-semibold text-[#DFBC91] transition-colors hover:text-[#F6F4EF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBC91]"
+                >
+                  <span>{copy.readMovement}</span>
+                  <ArrowRight
+                    className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </TransitionLink>
+              </div>
             </div>
           </div>
 
@@ -185,7 +197,7 @@ export function PoeticTriptychSection() {
                   data-testid={`triptych-act-${idx}`}
                   data-lit={isLit ? 'true' : 'false'}
                   className={`border-t border-white/18 pt-8 transition-opacity duration-500 ${
-                    isLit ? 'opacity-100' : 'opacity-65'
+                    isLit ? 'opacity-100' : 'opacity-82'
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">

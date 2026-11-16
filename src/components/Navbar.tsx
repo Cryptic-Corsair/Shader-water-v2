@@ -91,15 +91,54 @@ export function Navbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileOpen]);
 
+  const [activeHomeSection, setActiveHomeSection] = useState<'journey' | 'cycles' | null>(null);
+
   const isHome = location.pathname === '/';
   const isArchive =
     location.pathname === '/poems' || location.pathname.startsWith('/poems/');
   const isShaders = location.pathname === '/shaders';
+
+  useEffect(() => {
+    if (!isHome || typeof IntersectionObserver === 'undefined') {
+      setActiveHomeSection(null);
+      return;
+    }
+
+    const targets: Array<{ id: string; key: 'journey' | 'cycles' }> = [
+      { id: 'chapter-presence', key: 'journey' },
+      { id: 'chapter-cycles', key: 'cycles' },
+      { id: 'chapter-story', key: 'journey' },
+    ];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const matched = targets.find((t) => t.id === entry.target.id);
+          if (matched) {
+            setActiveHomeSection(matched.key);
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    targets.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [isHome]);
+
   const isJourneyActive =
     isHome &&
-    (location.hash === '#chapter-story' ||
+    (activeHomeSection === 'journey' ||
+      location.hash === '#chapter-story' ||
       location.hash === '#chapter-presence');
-  const isCyclesActive = isHome && location.hash === '#chapter-cycles';
+  const isCyclesActive =
+    isHome &&
+    (activeHomeSection === 'cycles' || location.hash === '#chapter-cycles');
 
   const navigateToSection = (
     primaryId: string,

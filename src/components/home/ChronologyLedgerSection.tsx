@@ -5,6 +5,7 @@ import { AUTHOR_PROFILE } from '../../data/authorProfile';
 import {
   getCollections,
   getCycleLabel,
+  toBanglaNumerals,
   type CycleId,
 } from '../../data/poemsCatalog';
 import { getUiCopy } from '../../data/uiCopy';
@@ -148,40 +149,51 @@ export function ChronologyLedgerSection() {
         </div>
 
         {/* Interactive Ledger Filter Bar */}
-        <div
-          role="tablist"
-          aria-label="Filter chronological ledger"
-          className="mt-10 flex flex-wrap items-center gap-2 border-b border-white/14 pb-5"
-        >
-          {filterOptions.map((opt) => {
-            const isActive = cycleFilter === opt;
-            const label =
-              opt === 'all' ? copy.allFilter : getCycleLabel(opt, lang);
-            return (
-              <button
-                key={opt}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                data-testid={`chronology-filter-${opt}`}
-                onClick={() => {
-                  setCycleFilter(opt);
-                  const next = filterTimelineMilestonesByCycle(
-                    allMilestones,
-                    opt
-                  );
-                  if (next[0]) setExpandedId(next[0].id);
-                }}
-                className={`cursor-pointer whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBC91] ${
-                  isActive
-                    ? 'bg-[#DFBC91] text-[#171A21]'
-                    : 'border border-white/14 bg-white/[0.04] text-[#F6F4EF]/76 hover:text-[#F6F4EF]'
-                }`}
-              >
-                {label}
-              </button>
-            );
-          })}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/14 pb-5">
+          <div
+            role="tablist"
+            aria-label="Filter chronological ledger"
+            className="flex flex-wrap items-center gap-2"
+          >
+            {filterOptions.map((opt) => {
+              const isActive = cycleFilter === opt;
+              const label =
+                opt === 'all' ? copy.allFilter : getCycleLabel(opt, lang);
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  data-testid={`chronology-filter-${opt}`}
+                  onClick={() => {
+                    setCycleFilter(opt);
+                    const next = filterTimelineMilestonesByCycle(
+                      allMilestones,
+                      opt
+                    );
+                    if (next[0]) setExpandedId(next[0].id);
+                  }}
+                  className={`cursor-pointer whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBC91] ${
+                    isActive
+                      ? 'bg-[#DFBC91] text-[#171A21]'
+                      : 'border border-white/14 bg-white/[0.04] text-[#F6F4EF]/76 hover:text-[#F6F4EF]'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          <span
+            data-testid="chronology-count"
+            className="text-xs font-medium text-[#B2C2D4]/85 tabular-nums"
+          >
+            {lang === 'bn'
+              ? `${toBanglaNumerals(visibleMilestones.length)} / ${toBanglaNumerals(allMilestones.length)}`
+              : `${visibleMilestones.length} / ${allMilestones.length}`}
+          </span>
         </div>
 
         {/* SVG-Traced Meridian Chronological Ledger */}
@@ -234,15 +246,12 @@ export function ChronologyLedgerSection() {
 
                   {/* Meridian Orbital Node */}
                   <div className="relative z-10 flex justify-center pt-1.5">
-                    <button
-                      type="button"
-                      onClick={() => setExpandedId(node.id)}
-                      aria-label={node.title}
-                      aria-expanded={isExpanded}
-                      className={`h-3.5 w-3.5 cursor-pointer rounded-full border transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBC91] ${
+                    <span
+                      aria-hidden="true"
+                      className={`h-3.5 w-3.5 rounded-full border transition-all duration-300 ${
                         isExpanded
                           ? 'scale-125 border-[#DFBC91] bg-[#DFBC91] shadow-[0_0_16px_rgba(223,188,145,0.65)]'
-                          : 'border-white/55 bg-[#4A5362] hover:border-[#DFBC91]'
+                          : 'border-white/55 bg-[#4A5362]'
                       }`}
                     />
                   </div>

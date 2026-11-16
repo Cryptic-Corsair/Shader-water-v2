@@ -481,9 +481,23 @@ export function CustomGlslCanvas({
     intensity,
     scale,
     paused,
-    palette,
   });
-  uniformsRef.current = { speed, intensity, scale, paused, palette };
+  uniformsRef.current = { speed, intensity, scale, paused };
+
+  const paletteRgbRef = useRef({
+    a: hexToRgbTuple(palette.colorA),
+    b: hexToRgbTuple(palette.colorB),
+    c: hexToRgbTuple(palette.colorC),
+    accent: hexToRgbTuple(palette.accent),
+  });
+  useEffect(() => {
+    paletteRgbRef.current = {
+      a: hexToRgbTuple(palette.colorA),
+      b: hexToRgbTuple(palette.colorB),
+      c: hexToRgbTuple(palette.colorC),
+      accent: hexToRgbTuple(palette.accent),
+    };
+  }, [palette.colorA, palette.colorB, palette.colorC, palette.accent]);
 
   const pointerTargetRef = useRef({ x: 0.52, y: 0.48 });
   if (externalPointer) {
@@ -629,10 +643,7 @@ export function CustomGlslCanvas({
       smoothMouse.x += (pointerTargetRef.current.x - smoothMouse.x) * 0.1;
       smoothMouse.y += (pointerTargetRef.current.y - smoothMouse.y) * 0.1;
 
-      const rgbA = hexToRgbTuple(u.palette.colorA);
-      const rgbB = hexToRgbTuple(u.palette.colorB);
-      const rgbC = hexToRgbTuple(u.palette.colorC);
-      const rgbAcc = hexToRgbTuple(u.palette.accent);
+      const { a: rgbA, b: rgbB, c: rgbC, accent: rgbAcc } = paletteRgbRef.current;
 
       gl.uniform1f(locTime, simTime);
       gl.uniform2f(locRes, canvas.width, canvas.height);

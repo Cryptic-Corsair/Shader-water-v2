@@ -291,6 +291,18 @@ export function SalonReadingSection() {
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </button>
+            <span
+              data-testid="salon-slide-counter"
+              className="min-w-[3.5rem] text-center text-xs font-medium text-[#DFBC91] tabular-nums"
+            >
+              {(() => {
+                const cur = String(activeIndex + 1).padStart(2, '0');
+                const tot = String(total).padStart(2, '0');
+                return lang === 'bn'
+                  ? `${toBanglaNumerals(cur)} / ${toBanglaNumerals(tot)}`
+                  : `${cur} / ${tot}`;
+              })()}
+            </span>
             <button
               ref={nextBtnRef}
               type="button"

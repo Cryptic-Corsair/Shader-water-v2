@@ -75,7 +75,7 @@ export function HeroTwilightAperture({
 
       {/* Transparent Optical Arched Specimen Lens Revealing Live 3D Raymarched Poetry Book Behind */}
       <div
-        className="relative aspect-[3/4] w-full overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-white/24 bg-transparent shadow-[0_34px_95px_rgba(14,18,26,0.34)] transition-transform duration-300 ease-out will-change-transform"
+        className="relative aspect-[4/4.2] sm:aspect-[3/4] w-full overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-white/24 bg-transparent shadow-[0_34px_95px_rgba(14,18,26,0.34)] transition-transform duration-300 ease-out will-change-transform"
         style={{
           transform: reducedMotion
             ? undefined
@@ -88,6 +88,16 @@ export function HeroTwilightAperture({
           className="pointer-events-none absolute inset-0 opacity-65 transition-opacity duration-300"
           style={{
             background: `radial-gradient(56% 48% at ${tilt.glintPercentX}% ${tilt.glintPercentY}%, rgba(246, 244, 239, 0.16) 0%, rgba(223, 188, 145, 0.08) 38%, transparent 72%)`,
+          }}
+        />
+
+        {/* Top Contrast Scrim strictly behind Coordinates Calibration */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[24%]"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(16, 20, 28, 0.72) 0%, rgba(16, 20, 28, 0.24) 62%, transparent 100%)',
           }}
         />
 
@@ -119,10 +129,10 @@ export function HeroTwilightAperture({
         />
 
         {/* Top Coordinates Calibration */}
-        <div className="pointer-events-none absolute inset-x-0 top-7 flex justify-center px-6">
+        <div className="pointer-events-none absolute inset-x-0 top-7 z-10 flex justify-center px-6">
           <span
             lang="bn"
-            className="text-[11px] font-medium tracking-[0.04em] text-[#F6F4EF]/84 tabular-nums drop-shadow-sm"
+            className="text-[11px] font-medium tracking-[0.04em] text-[#F6F4EF]/90 tabular-nums drop-shadow-sm"
           >
             {activeFolio.coordinates}
           </span>

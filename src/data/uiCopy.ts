@@ -78,7 +78,7 @@ export const UI_COPY = {
       nextAria: 'পরবর্তী সংকলন',
       openCycle: 'সংকলন খুলুন',
       preview: 'দেখুন',
-      hint: 'টেনে ধরুন, অ্যারো কী ব্যবহার করুন অথবা সংকলন নির্বাচন করে কবিতাগারে প্রবেশ করুন',
+      hint: 'যেকোনো কাব্যচক্রের কবিতাতালিকা দেখতে ‘দেখুন’ বোতামে ক্লিক করুন অথবা পূর্ণ সংকলন খুলুন',
       contentsLabel: 'এই পর্বের কবিতাগুলো',
       volumeLabel: 'কাব্যচক্র',
       closeDrawer: 'দরাজ বন্ধ করুন',
@@ -92,6 +92,7 @@ export const UI_COPY = {
       subheading:
         'স্ক্রল করার সাথে সাথে আকাশ ও জলের রঙ বদলে যায়—অথবা নিচের যেকোনো অনুভবের পরিমণ্ডল বেছে নিয়ে সরাসরি কবিতার আবহে প্রবেশ করুন।',
       cta: 'সকল সংগৃহীত কবিতা পড়ুন',
+      readPoemSuffix: 'পড়ুন',
       progressLabel: 'পাঠের গভীরতা',
       resumeScroll: 'স্ক্রল-অনুসরণ চালু করুন',
       followScroll: 'স্ক্রল অনুযায়ী পরিবর্তনশীল',
@@ -103,7 +104,7 @@ export const UI_COPY = {
       prevAria: 'পূর্ববর্তী নির্বাচিত কবিতা',
       nextAria: 'পরবর্তী নির্বাচিত কবিতা',
       readFull: 'সম্পূর্ণ কবিতা পড়ুন',
-      hint: 'থামাতে মাউস রাখুন · সম্পূর্ণ পাঠকক্ষ খুলতে যেকোনো কবিতা নির্বাচন করুন',
+      hint: 'থামাতে পঙ্‌ক্তিতে মাউস রাখুন · তীর চিহ্ন বা সূচি থেকে যেকোনো কবিতা পড়ুন',
       indexLabel: 'নির্বাচিত সূচি',
     },
     timeline: {
@@ -299,7 +300,7 @@ export const UI_COPY = {
       nextAria: 'Next cycle',
       openCycle: 'Open Cycle',
       preview: 'Preview',
-      hint: 'Drag, use arrow keys, or select a cycle to explore the poems',
+      hint: 'Select Preview on any volume to open its poem drawer, or open the full cycle in the Archive',
       contentsLabel: 'Poems in this Volume',
       volumeLabel: 'Volume',
       closeDrawer: 'Close drawer',
@@ -313,6 +314,7 @@ export const UI_COPY = {
       subheading:
         'The sky and water palette shifts continuously as you scroll—or pick any realm below to inhabit its atmospheric light.',
       cta: 'Read the Collected Poems',
+      readPoemSuffix: 'Read',
       progressLabel: 'Scroll Resonance',
       resumeScroll: 'Resume scroll sync',
       followScroll: 'Synced to scroll',
@@ -324,7 +326,7 @@ export const UI_COPY = {
       prevAria: 'Previous featured poem',
       nextAria: 'Next featured poem',
       readFull: 'Read Full Poem',
-      hint: 'Hover a ribbon to pause · Select any excerpt to open the reading room',
+      hint: 'Hover ribbons to pause · Use arrows or select a poem to open its reading room',
       indexLabel: 'Featured Index',
     },
     timeline: {
