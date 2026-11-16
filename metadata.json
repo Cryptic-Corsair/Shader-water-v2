@@ -1,0 +1,8 @@
+{
+  "name": "author portfolio v6",
+  "description": "A high-performance, scalable React framework for curating and navigating an extensive collection of literary poetry with smooth motion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

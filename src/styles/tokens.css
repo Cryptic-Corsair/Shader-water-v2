@@ -1,0 +1,54 @@
+:root {
+  /* Liminal Twilight Canvas Atmosphere */
+  --twilight-base: #596270;
+  --twilight-slate: #363E4B;
+  --twilight-pewter: #677180;
+  --twilight-cloud: #C6BEB4;
+  --twilight-cloud-soft: #C8C0B6;
+  --twilight-sandstone: #8E827B;
+
+  /* Frosted Light Glass (Primary readable surfaces & controls) */
+  --glass-light-bg: rgba(245, 242, 237, 0.66);
+  --glass-light-bg-hover: rgba(245, 242, 237, 0.80);
+  --glass-light-border: rgba(255, 255, 255, 0.38);
+  --ink-deep: #171A21;
+  --ink-muted: #4C5361;
+
+  /* Frosted Dusk Glass (Atmospheric overlay cards & footer) */
+  --glass-dusk-bg: rgba(34, 40, 50, 0.46);
+  --glass-dusk-bg-hover: rgba(34, 40, 50, 0.60);
+  --glass-dusk-border: rgba(255, 255, 255, 0.20);
+  --ink-pearl: #F6F4EF;
+  --ink-pearl-soft: rgba(246, 244, 239, 0.78);
+
+  /* Restrained Liminal Accents */
+  --accent-amber: #DFBC91;
+  --accent-mist: #B2C2D4;
+
+  /* Reading Room Paper Surface (kept harmonious with warm cloud) */
+  --bg-paper: #F2EDE4;
+  --bg-paper-elevated: #E6DFD3;
+  --text-ink: #171A21;
+  --text-ink-muted: #525966;
+
+  /* Typography Families */
+  --font-display: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Cormorant', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-bn-display: 'Noto Serif Bengali', 'Tiro Bangla', serif;
+  --font-bn-verse: 'Tiro Bangla', 'Noto Serif Bengali', serif;
+  --font-bn-ui: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+
+  /* Fluid Typographic Scales */
+  --text-hero: clamp(3rem, 7.2vw, 6.8rem);
+  --text-display: clamp(2.2rem, 4.4vw, 4.1rem);
+  --text-heading: clamp(1.5rem, 2.5vw, 2.3rem);
+  --text-verse: clamp(1.3rem, 1.8vw, 1.7rem);
+  --text-body: clamp(0.95rem, 1.05vw, 1.0625rem);
+
+  /* Radii & Motion */
+  --radius-card: 28px;
+  --radius-capsule: 999px;
+  --container-max: 82rem;
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+}

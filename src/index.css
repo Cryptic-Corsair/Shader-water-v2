@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+@layer base {
+  html {
+    background-color: var(--twilight-base);
+    color: var(--ink-pearl);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #1D2430;
+    color: var(--ink-pearl);
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgba(223, 188, 145, 0.36);
+    color: var(--ink-pearl);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  h2, h3, .font-editorial-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Strict Bengali Script Rules: never clip conjuncts (যুক্তাক্ষর) or vowel marks */
+  :lang(bn),
+  .font-bn-display,
+  .font-bn-verse,
+  .font-bn-ui {
+    letter-spacing: 0 !important;
+  }
+
+  .font-bn-display {
+    font-family: var(--font-bn-display);
+    line-height: 1.38;
+  }
+
+  .font-bn-verse {
+    font-family: var(--font-bn-verse);
+    font-style: normal !important;
+    line-height: 1.85;
+  }
+
+  .font-bn-ui {
+    font-family: var(--font-bn-ui);
+    line-height: 1.85;
+  }
+
+  html:lang(bn) body {
+    font-family: var(--font-bn-ui);
+    line-height: 1.85;
+    letter-spacing: 0;
+  }
+
+  html:lang(bn) .font-display {
+    font-family: var(--font-bn-display);
+    letter-spacing: 0 !important;
+    line-height: 1.32;
+  }
+
+  html:lang(bn) h2,
+  html:lang(bn) h3,
+  html:lang(bn) .font-editorial-serif {
+    font-family: var(--font-bn-display);
+    letter-spacing: 0 !important;
+  }
+
+  .editorial-drop-cap::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 300;
+  }
+
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Luminous display ink readability shadow over mid-tone twilight backdrops */
+.display-luminous {
+  color: var(--ink-pearl);
+  text-shadow: 0 1px 24px rgba(24, 28, 36, 0.25);
+}
+
+/* Frosted Light Glass (Primary readable cards, nav capsule, verse pills) */
+.glass-light {
+  background: var(--glass-light-bg);
+  backdrop-filter: blur(14px) saturate(114%);
+  -webkit-backdrop-filter: blur(14px) saturate(114%);
+  border: 1px solid var(--glass-light-border);
+  color: var(--ink-deep);
+}
+
+/* Frosted Dusk Glass (Atmospheric overlay cards, footer, modal veils) */
+.glass-dusk {
+  background: var(--glass-dusk-bg);
+  backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  border: 1px solid var(--glass-dusk-border);
+  color: var(--ink-pearl);
+}
+
+/* Smooth edge-feather mask for shader canvases so zero rectangular seams appear */
+.shader-feather-y {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 88%,
+    transparent 100%
+  );
+}
+
+/* Atmosphere host class (compositor-clean over global Water shader) */
+.twilight-atmosphere-grain {
+  position: relative;
+}
+
+/* Link hover underline animation */
+.editorial-link {
+  position: relative;
+  display: inline-block;
+}
+
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 280ms var(--ease-editorial);
+}
+
+.editorial-link:hover::after,
+.editorial-link:focus-visible::after,
+.editorial-link[data-active="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Animated CSS mesh gradient keyframes for non-WebGL collection worlds */
+@keyframes meshDriftSlow {
+  0%, 100% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.06);
+  }
+}
+
+.animate-mesh-drift {
+  animation: meshDriftSlow 18s ease-in-out infinite;
+}
+
+@keyframes moodPulse {
+  0%, 100% {
+    transform: scaleY(0.45);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-mood-pulse {
+  animation: moodPulse 2.4s ease-in-out infinite;
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
